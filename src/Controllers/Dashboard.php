@@ -21,20 +21,20 @@ class Dashboard
     public static function environment()
     {
         $envs = [
-            ['name' => 'PHP version',       'value' => 'PHP/'.PHP_VERSION],
-            ['name' => 'Laravel version',   'value' => app()->version()],
-            ['name' => 'CGI',               'value' => php_sapi_name()],
-            ['name' => 'Uname',             'value' => php_uname()],
-            ['name' => 'Server',            'value' => Arr::get($_SERVER, 'SERVER_SOFTWARE')],
+            ['name' => 'PHP 版本', 'value' => 'PHP/'.PHP_VERSION],
+            ['name' => 'Laravel 框架版本', 'value' => app()->version()],
+            ['name' => 'CGI', 'value' => php_sapi_name()],
+            ['name' => '系统环境', 'value' => php_uname()],
+            ['name' => '服务器环境', 'value' => Arr::get($_SERVER, 'SERVER_SOFTWARE')],
 
-            ['name' => 'Cache driver',      'value' => config('cache.default')],
-            ['name' => 'Session driver',    'value' => config('session.driver')],
-            ['name' => 'Queue driver',      'value' => config('queue.default')],
+            ['name' => 'Cache driver', 'value' => config('cache.default')],
+            ['name' => 'Session driver', 'value' => config('session.driver')],
+            ['name' => 'Queue driver', 'value' => config('queue.default')],
 
-            ['name' => 'Timezone',          'value' => config('app.timezone')],
-            ['name' => 'Locale',            'value' => config('app.locale')],
-            ['name' => 'Env',               'value' => config('app.env')],
-            ['name' => 'URL',               'value' => config('app.url')],
+            ['name' => '时区', 'value' => config('app.timezone')],
+            ['name' => '系统语言', 'value' => config('app.locale')],
+            ['name' => '系统运行环境', 'value' => config('app.env')],
+            ['name' => '网址', 'value' => config('app.url')],
         ];
 
         return view('admin::dashboard.environment', compact('envs'));
@@ -113,5 +113,17 @@ class Dashboard
         Admin::script("$('.dependencies').slimscroll({height:'510px',size:'3px'});");
 
         return view('admin::dashboard.dependencies', compact('dependencies'));
+    }
+
+    public static function system_developer()
+    {
+        if (file_exists(base_path('system_developer.json'))) {
+            $json = file_get_contents(base_path('system_developer.json'));
+            $developer = json_decode($json, true);
+        } else {
+            $developer = '';
+        }
+
+        return view('admin::dashboard.system_developer', compact('developer'));
     }
 }
