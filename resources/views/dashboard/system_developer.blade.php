@@ -9,7 +9,7 @@
     </div>
     <div class="box-body">
         <ul class="products-list product-list-in-box">
-            @if($developer)
+            @if(count($developer)>0)
                 @foreach($developer as $key=>$val)
                     <li class="item"><span style="font-weight: bold">{{ucfirst($key)}}:</span> {{$val}} </li>
                 @endforeach

@@ -78,9 +78,12 @@ class InstallCommand extends Command
         $this->createHomeController();
         $this->createAuthController();
         $this->createExampleController();
-
+        $this->createModuleController();
+        $this->createWebSystemController();
         $this->createBootstrapFile();
         $this->createRoutesFile();
+        $this->createModel('Modules');
+        $this->createModel('SystemConfig');
     }
 
     /**
@@ -131,7 +134,35 @@ class InstallCommand extends Command
             $exampleController,
             str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
         );
-        $this->line('<info>ExampleController file was created:</info> '.str_replace(base_path(), '', $exampleController));
+        $this->line(
+            '<info>ExampleController file was created:</info> '.str_replace(base_path(), '', $exampleController)
+        );
+    }
+
+    public function createModuleController()
+    {
+        $moduleController = $this->directory.'/Controllers/ModuleController.php';
+        $contents = $this->getStub('ModuleController');
+        $this->laravel['files']->put(
+            $moduleController,
+            str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
+        );
+        $this->line(
+            '<info>ExampleController file was created:</info> '.str_replace(base_path(), '', $moduleController)
+        );
+    }
+
+    public function createWebSystemController()
+    {
+        $moduleController = $this->directory.'/Controllers/WebSystemController.php';
+        $contents = $this->getStub('WebSystemController');
+        $this->laravel['files']->put(
+            $moduleController,
+            str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
+        );
+        $this->line(
+            '<info>ExampleController file was created:</info> '.str_replace(base_path(), '', $moduleController)
+        );
     }
 
     /**
@@ -182,5 +213,17 @@ class InstallCommand extends Command
     protected function makeDir($path = '')
     {
         $this->laravel['files']->makeDirectory("{$this->directory}/$path", 0755, true, true);
+    }
+
+    public function createModel($model_name)
+    {
+        $file_directory = $this->directory.'/../Model';
+        if (file_exists($file_directory)) {
+            $this->makeDir($file_directory);
+        }
+        $file = $file_directory.'/'.$model_name.'.php';
+        $contents = $this->getStub($model_name);
+        $this->laravel['files']->put($file, str_replace('DummyNamespace', 'App\Model', $contents));
+        $this->line('<info>Model file was created:</info> '.str_replace(base_path(), '', $file));
     }
 }
