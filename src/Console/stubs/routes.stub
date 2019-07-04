@@ -18,6 +18,5 @@ Route::group([
     // 模块管理
     $router->resource('modules','ModuleController');
     //模块路由处理
-    Module::routes();
-
+    //Module::routes();
 });
