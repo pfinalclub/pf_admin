@@ -125,20 +125,6 @@ class CreateAdminTables extends Migration
             }
         );
         Schema::create(
-            'system_config',
-            function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->string('title')->default('PFinal社区')->comment('网站标题');
-                $table->string('keywords')->default('PFinal社区')->comment('网站关键字');
-                $table->string('description')->default(
-                    'pfinalClub 致力于提供优质PHP中文学习资源,Laravel、Yii、ThinkPHP等框架学习资源、中文视频教程、项目实战教程'
-                )->comment('站点描述');
-                $table->string('logo')->default('logo.jpg')->comment('站点logo');
-                $table->unsignedInteger('template_id')->default(0)->index()->comment('模板id');
-                $table->timestamps();
-            }
-        );
-        Schema::create(
             'modules',
             function (Blueprint $table) {
                 $table->bigIncrements('id');
@@ -149,6 +135,8 @@ class CreateAdminTables extends Migration
                 $table->tinyInteger('is_nav')->default(0)->comment('是否显示导航');
                 $table->tinyInteger('status')->default(0)->comment('是否上线');
                 $table->text('package')->comment('模块配置');
+                $table->tinyInteger('subscribe')->comment('权限配置');
+                $table->text('permissions')->comment('权限配置');
                 $table->timestamps();
             }
         );
@@ -170,7 +158,6 @@ class CreateAdminTables extends Migration
         Schema::dropIfExists(config('admin.database.role_permissions_table'));
         Schema::dropIfExists(config('admin.database.role_menu_table'));
         Schema::dropIfExists(config('admin.database.operation_log_table'));
-        Schema::dropIfExists('system_config');
         Schema::dropIfExists('table_modules');
     }
 }

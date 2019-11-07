@@ -85,13 +85,6 @@ class AdminTablesSeeder extends Seeder
                     'icon' => 'fa-bar-chart',
                     'uri' => '/',
                 ],
-				[
-                    'parent_id' => 1,
-                    'order' => 8,
-                    'title' => '前台系统管理',
-                    'icon' => 'fa-bar-chart',
-                    'uri' => 'reception_system',
-                ],
                 [
                     'parent_id' => 0,
                     'order' => 2,
