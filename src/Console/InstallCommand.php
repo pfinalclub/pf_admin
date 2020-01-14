@@ -82,8 +82,8 @@ class InstallCommand extends Command
         $this->createWebSystemController();
         $this->createBootstrapFile();
         $this->createRoutesFile();
-        $this->createModel('Modules');
-        $this->createModel('SystemConfig');
+	    $this->createModel('Modules');
+	    $this->createModel('SystemConfig');
     }
 
     /**
@@ -217,13 +217,13 @@ class InstallCommand extends Command
 
     public function createModel($model_name)
     {
-        $file_directory = $this->directory.'/../Model';
+        $file_directory = $this->directory.'/../Models';
         if (file_exists($file_directory)) {
             $this->makeDir($file_directory);
         }
         $file = $file_directory.'/'.$model_name.'.php';
         $contents = $this->getStub($model_name);
-        $this->laravel['files']->put($file, str_replace('DummyNamespace', 'App\Model', $contents));
+        $this->laravel['files']->put($file, str_replace('DummyNamespace', 'App\Models', $contents));
         $this->line('<info>Model file was created:</info> '.str_replace(base_path(), '', $file));
     }
 }
